@@ -32,3 +32,38 @@ from locator import locator_local
 locators_by_version = {
     55: locator_local
 }
+# will get populated in _init_locators
+locator_local = {}
+@selenium_retry
+class FIELO(BaseFieloPage, SalesforceRobotLibraryBase):
+
+    ROBOT_LIBRARY_SCOPE = 'GLOBAL'
+    ROBOT_LIBRARY_VERSION = 1.0
+
+    def __init__(self, debug=False):
+        self.debug = debug
+        self.current_page = None
+        self._session_records = []
+        self.val = 0
+        self.payment_list = []
+        # Turn off info logging of all http requests
+        logging.getLogger('requests.packages.urllib3.connectionpool').setLevel(logging.WARN)
+        self._init_locators()
+    
+    def _init_locators(self):
+        try:
+            client = self.cumulusci.tooling
+            response = client._call_salesforce(
+                'GET', 'https://{}/services/data'.format(client.sf_instance))
+            self.latest_api_version = float(response.json()[-1]['version'])
+            if not self.latest_api_version in locators_by_api_version:
+                warnings.warn("Could not find locator library for API %d" % self.latest_api_version)
+                self.latest_api_version = max(locators_by_api_version.keys())
+        except RobotNotRunningError:
+            # We aren't part of a running test, likely because we are
+            # generating keyword documentation. If that's the case, assume
+            # the latest supported version
+            self.latest_api_version = max(locators_by_api_version.keys())
+        locators = locators_by_api_version[self.latest_api_version]
+        fielo_lex_locators.update(locators)
+        
