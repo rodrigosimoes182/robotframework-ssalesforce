@@ -25,7 +25,7 @@ from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.common.exceptions import NoSuchElementException
 
 from tasks.salesforce_robot_library_base import SalesforceRobotLibraryBase
-from BaseObjects import BaseFieloPage
+from BaseObjects import BasePage
 
 from locator import locator_local
 
@@ -35,7 +35,7 @@ locators_by_version = {
 # will get populated in _init_locators
 locator_local = {}
 @selenium_retry
-class FIELO(BaseFieloPage, SalesforceRobotLibraryBase):
+class (BasePage, SalesforceRobotLibraryBase):
 
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
     ROBOT_LIBRARY_VERSION = 1.0
@@ -65,5 +65,5 @@ class FIELO(BaseFieloPage, SalesforceRobotLibraryBase):
             # the latest supported version
             self.latest_api_version = max(locators_by_api_version.keys())
         locators = locators_by_api_version[self.latest_api_version]
-        fielo_lex_locators.update(locators)
+        _lex_locators.update(locators)
         

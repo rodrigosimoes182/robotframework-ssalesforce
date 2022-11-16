@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation    Create badges
 
-Resource  ../../resources/FIELO.robot
+Resource  ../../resources/.robot
 Library   cumulusci.robotframework.PageObjects
 Library  ../../resources/LandingPageObject.py
 Suite Setup  Run keywords
@@ -21,13 +21,13 @@ ${badge_name}   Badge - created by robot
 T598
     [Documentation]  Create badge
     [Tags]  Automation
-    Go to page                      Landing             FieloPLT__Badges
+    Go to page                      Landing             PLT__Badges
         Wait until loading is complete
     Sleep  5s
     Select frame                    //iframe
     Click With Js                   //div[@class="slds-button-group slds-float--right"]//child::button
         Sleep  3s
-    Input fielo text                Badge Name          ${badge_name}
+    Input  text                Badge Name          ${badge_name}
     Click Element By Text        Save
         Wait until loading is complete
         sleep  5s
