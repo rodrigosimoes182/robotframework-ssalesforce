@@ -1,1 +1,2 @@
-#this folder is were the all testes were br placed
+# Test folder
+## This folder is used to place the robotframework test

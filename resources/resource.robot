@@ -1,6 +1,10 @@
 *** Settings ***
+Documentation    Resource Robot File
+...              Status: This test is not working yet
+...              Last update: November 16th 2022
+...              Purpose: Create keyword to be used on test case
 Resource       cumulusci/robotframework/Salesforce.robot
-Library        .py
+Library        resources.py
 Library        DateTime
 
 *** Keywords ***
@@ -17,8 +21,8 @@ API Get program
     Set Suite Variable      ${program_id}                    ${record['Id']}
     &{program} =            Salesforce Get                   __Program__c               ${program_id}
 
-API Get specific program
-    [Documentation]  Get a specific program by given name, and clear all settings leaving as it comes as default
+API Get Acess Saleforce
+    [Documentation]  Access sales force
     [Arguments]  ${program_name}
     ${result}=              SOQL Query
         ...                 SELECT Id FROM __Program__c WHERE Name='${program_name}'
@@ -36,9 +40,8 @@ API Get specific program
     Set Suite Variable      ${program_id}                    ${record['Id']}
     [Return]                &{program}
 
-API Delete Program
+API Delete Contact
     [Documentation]  First add permissions to the user
-    #get the user you want to give admin permission
         ${result}=  SOQL Query
     ...  SELECT Id FROM user WHERE Name='User User'
     ${record}=  Get from list  ${result['records']}  0
@@ -48,9 +51,7 @@ API Delete Program
     ...                 SetupOwnerId=${user_id}
     ...                 __To__c=2020-11-12T15:44:00.000+0000
 
-    ###Insert here the action that demands admin permission######
-
-    ###Insert here the action that demands admin permission######
+    ### Insert here the action that demands admin permission######
 
     Salesforce Delete  __AdminPermission__c  ${adminpermission}
 

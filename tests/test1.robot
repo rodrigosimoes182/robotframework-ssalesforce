@@ -1,5 +1,7 @@
 *** Settings ***
-Documentation    Create badges
+Documentation    Create Contact
+...              Status: This test is not working yet
+...              Last update: November 16th 2022
 
 Resource  ../../resources/.robot
 Library   cumulusci.robotframework.PageObjects
@@ -13,11 +15,12 @@ Suite Teardown  Run Keywords
 
 
 *** Variables ***
-
+### In this part of test is possible to insert the variable used during test
+${Contact_name}=    "//div[@class="slds-button-group slds-float--right"]//child::button"
 *** Test Cases ***
-T598
-    [Documentation]  Create contact
-    [Tags]  Automation
+Test Number One
+    [Documentation]  Create Contact
+    [Tags]  Test Dummy
     Go to page                      Landing             contacts
         Wait until loading is complete
     Sleep  5s
@@ -29,8 +32,3 @@ T598
         Wait until loading is complete
         sleep  5s
         Current frame should contain                    Next
-        Current frame should contain                    ${Contact_name}
-        Current frame should contain                    Status
-        Current frame should contain                    Draft
-        Current frame should contain                    Edit
-        Current frame should contain                    Activate
