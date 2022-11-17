@@ -1,4 +1,4 @@
-"""Locators for the las version of SalesForce"""
+"""Locators for the last version of SalesForce"""
 
 locator_local={
     'button': '//button[contains(text(),"{}")]',
