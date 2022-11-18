@@ -56,14 +56,14 @@ class (BasePage, SalesforceRobotLibraryBase):
             response = client._call_salesforce(
                 'GET', 'https://{}/services/data'.format(client.sf_instance))
             self.latest_api_version = float(response.json()[-1]['version'])
-            if not self.latest_api_version in locators_by_api_version:
+            if not self.latest_api_version in locator_local:
                 warnings.warn("Could not find locator library for API %d" % self.latest_api_version)
-                self.latest_api_version = max(locators_by_api_version.keys())
+                self.latest_api_version = max(locator_local.keys())
         except RobotNotRunningError:
             # We aren't part of a running test, likely because we are
             # generating keyword documentation. If that's the case, assume
             # the latest supported version
-            self.latest_api_version = max(locators_by_api_version.keys())
-        locators = locators_by_api_version[self.latest_api_version]
-        _lex_locators.update(locators)
+            self.latest_api_version = max(locator_local.keys())
+        locators = locator_local[self.latest_api_version]
+        locator_local.update(locators)
         
