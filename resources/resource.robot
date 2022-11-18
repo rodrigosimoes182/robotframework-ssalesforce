@@ -8,19 +8,6 @@ Library        resources.py
 Library        DateTime
 
 *** Keywords ***
-API Get program
-    [Documentation]  Get any existed program
-    @{records}=  Salesforce Query  __Triggers__c  select=Id
-    FOR  ${record}  IN  @{records}
-        log  Id: ${record['Id']}
-        Salesforce Delete  __Triggers__c  ${record['Id']}
-    END
-    ${result}=              SOQL Query
-        ...                 SELECT Id FROM __Program__c
-    ${record}=              Get from list                    ${result['records']}       0
-    Set Suite Variable      ${program_id}                    ${record['Id']}
-    &{program} =            Salesforce Get                   __Program__c               ${program_id}
-
 API Get Acess Saleforce
     [Documentation]  Access sales force
     [Arguments]  ${program_name}
@@ -28,17 +15,6 @@ API Get Acess Saleforce
         ...                 SELECT Id FROM __Program__c WHERE Name='${program_name}'
     ${record}=              Get from list                    ${result['records']}               0
     &{program} =            Salesforce Get                   __Program__c               ${record['Id']}
-
-    Salesforce Update  __Program__c  ${record['Id']}
-        ...  Name=${program_name}
-        ...  __OnlineTransactionProcessing__c=true
-        ...  __RequestMemberAuthorization__c=false
-        ...  __CapAdjustmentTransactions__c=false
-        ...  __RequestRedemptionAuthorization__c=false
-        ...  __RequestUser__c=false
-        ...  __RequestBudgetAuthorization__c=false
-    Set Suite Variable      ${program_id}                    ${record['Id']}
-    [Return]                &{program}
 
 API Delete Contact
     [Documentation]  First add permissions to the user

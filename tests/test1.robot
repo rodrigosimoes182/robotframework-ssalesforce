@@ -25,8 +25,6 @@ Test Number One
         Wait until loading is complete
     Sleep  5s
     Select frame                    //iframe
-    Click With JavaScript                   //div[@class="slds-button-group slds-float--right"]//child::button
-        Sleep  3s
     Input  text               contact name          ${Contact_name}
     Click Element By Text        Save
         Wait until loading is complete
