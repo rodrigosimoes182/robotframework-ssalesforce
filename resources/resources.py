@@ -7,11 +7,6 @@ import time
 
 from robot.libraries.BuiltIn import RobotNotRunningError
 from robot.libraries.BuiltIn import BuiltIn
-from SeleniumLibrary.errors import ElementNotFound, SeleniumLibraryException
-from cumulusci.tasks.apex.anon import AnonymousApexTask
-from cumulusci.core.config import TaskConfig
-from cumulusci.robotframework.utils import selenium_retry
-from cumulusci.robotframework.utils import capture_screenshot_on_error
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
