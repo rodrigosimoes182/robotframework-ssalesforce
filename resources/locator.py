@@ -17,8 +17,6 @@ locator_local={
         'description': "//label[contains(text(), 'Description')]/parent::div/following-sibling::lightning-textarea//textarea",
         'combobox': "//label[contains(text(),'{}')]/parent::div/following-sibling::lightning-combobox//input",
         'combobox_selected': "//div[@lightning-basecombobox_basecombobox and @role='listbox']//span[@title='{}']",
-        'combobox_without_label': "//label[contains(text(),'{}')]/parent::div/parent::div/parent::div/following-sibling::div//input",
-        'combobox_without_label_selected': "//label[contains(text(),'{}')]/parent::div/parent::div/parent::div/following-sibling::div//span[@title='{}']",
         'process_when_following_expression_is_met': "//textarea[text()='ALL']",        
         'criteria':{                    
             'add_condition': "//span[text()='Add Condition']//parent::button",

@@ -9,7 +9,6 @@ Library  ../resources/locator.py
 Suite Setup  Run keywords
 ...          Open test browser
 ...          Maximize browser window
-
 Suite Teardown  Run Keywords
 ...          Capture Screenshot and Delete Records and Close Browser
 
