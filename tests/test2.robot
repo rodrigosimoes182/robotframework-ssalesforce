@@ -1,32 +1,25 @@
 *** Settings ***
-Documentation    Create Contact
-...              Status: This test is not working yet
-...              Last update: November 16th 2022
+Documentation     Abre o org com Playwright e valida a Home (Lightning).
+Resource          cumulusci/robotframework/SalesforcePlaywright.robot
+Suite Setup       Open Test Browser
+Suite Teardown    Delete Records And Close Browser
 
-Resource  ../resources/resource.robot
-Library   cumulusci.robotframework.PageObjects
-Library  ../resources/locator.py
-Suite Setup  Run keywords
-...          Open test browser
-...          Maximize browser window
-
-Suite Teardown  Run Keywords
-...          Capture Screenshot and Delete Records and Close Browser
-
-
-*** Variables ***
-### In this part of test is possible to insert the variable used during test
-${Contact_name}=    "//div[@class="slds-button-group slds-float--right"]//child::button"
 *** Test Cases ***
-Test Number One
-    [Documentation]  Create Contact
-    [Tags]  Test Dummy
-    Go to page                      Landing             contacts
-        Wait until loading is complete
-    Sleep  5s
-    Select frame                    //iframe
-    Input  text               contact name          ${Contact_name}
-    Click Element By Text        Save
-        Wait until loading is complete
-        sleep  5s
-        Current frame should contain                    Next
+Acessar Home do Salesforce (Playwright)
+    [Documentation]    Garante a Home carregada no Lightning.
+    Wait Until Salesforce Is Ready
+
+    # Ir direto para a Home Lightning (usa URL do org conectado)
+    &{org}=           Get Org Info
+    ${home_url}=      Set Variable    ${org['instance_url']}/lightning/page/home
+    Go To             ${home_url}
+    Wait Until Network Is Idle
+
+    # Asserções básicas
+    ${url}=           Get Url
+    Should Contain    ${url}    /lightning/page/home
+
+    # App Launcher visível (waffle)
+    Wait For Elements State    button:has-text("App Launcher")    visible
+    # Shell do Lightning presente
+    Wait For Elements State    css:one-app    visible

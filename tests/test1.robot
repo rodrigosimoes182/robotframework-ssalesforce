@@ -1,32 +1,25 @@
 *** Settings ***
-Documentation    Create Contact
-...              Status: This test is not working yet
-...              Last update: November 16th 2022
+Documentation     Acessa a Home (Lightning) e faz checagens básicas.
+Library           cumulusci.robotframework.Salesforce
+Library           cumulusci.robotframework.PageObjects
+Library           SeleniumLibrary
+Suite Setup       Open Test Browser
+Suite Teardown    Close All Browsers
 
-Resource  ../resources/resource.robot
-Library   cumulusci.robotframework.PageObjects
-Library  ../resources/locator.py
-Suite Setup  Run keywords
-...          Open test browser
-...          Maximize browser window
-
-Suite Teardown  Run Keywords
-...          Capture Screenshot and Delete Records and Close Browser
-
-
-*** Variables ***
-### In this part of test is possible to insert the variable used during test
-${Contact_name}=    "//div[@class="slds-button-group slds-float--right"]//child::button"
 *** Test Cases ***
-Test Number One
-    [Documentation]  Create Contact
-    [Tags]  Test Dummy
-    Go to page                      Landing             contacts
-        Wait until loading is complete
-    Sleep  5s
-    Select frame                    //iframe
-    Input  text               contact name          ${Contact_name}
-    Click Element By Text        Save
-        Wait until loading is complete
-        sleep  5s
-        Current frame should contain                    Next
+Abrir Home do Salesforce
+    [Documentation]    Navega até a Home do Salesforce Lightning e valida elementos chave.
+    Go To Page    Home
+    Wait Until Salesforce Is Ready
+
+    # Confirma que é a página de Home (URL canônica do Lightning)
+    Location Should Contain    /lightning/page/home
+
+    # Valida presença do “waffle” (App Launcher) no header — estável entre orgs.
+    Wait Until Keyword Succeeds    5x    2s
+    ...    Page Should Contain Element    css:button.slds-icon-waffle
+
+    # Opcional: valida que o shell do Lightning carregou
+    Page Should Contain Element    css:one-app
+
+    # (Opcional) Faça uma asserção de título visível comum em muitas orgs
