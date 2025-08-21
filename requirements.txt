@@ -1,0 +1,6 @@
+robotframework>=6.0
+robotframework-browser>=17.0
+playwright>=1.44
+cumulusci>=3.80.0
+requests>=2.25.0
+numpy>=1.21.0

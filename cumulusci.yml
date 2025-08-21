@@ -1,0 +1,31 @@
+minimum_cumulusci_version: '4.5.0'
+project:
+    name: salesforcetests
+    package:
+        name: robot-framework
+        namespace: package1
+        api_version: '63.0'
+    dependencies:
+        - github: 'https://github.com/SalesforceFoundation/NPSP'
+    git:
+        default_branch: 'main'
+        prefix_feature: 'Feature'
+        prefix_beta: 'b'
+        prefix_release: 'rls'
+    source_format: sfdx
+
+tasks:
+    robot:
+        options:
+            suites: robot/salesforcetests/tests
+            options:
+                outputdir: robot/salesforcetests/results
+
+    robot_testdoc:
+        options:
+            path: robot/salesforcetests/tests
+            output: robot/salesforcetests/doc/salesforcetests_tests.html
+
+    run_tests:
+        options:
+            required_org_code_coverage_percent: 60
